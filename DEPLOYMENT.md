@@ -30,43 +30,36 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-## Railway Deployment
+## Deployment — Render
 
-### Prerequisites
-- Railway account at https://railway.app
-- Railway CLI: `npm install -g @railway/cli`
+### Live URL
+https://prework-quiz-api.onrender.com
 
-### Steps
+### Platform
+Render (render.com) — Free tier
 
-```bash
-# 1. Login to Railway
-railway login
+### Database
+Render PostgreSQL — Free tier (90 days)
 
-# 2. Create a new project
-railway init
+### Environment Variables
+Set in Render dashboard → Service → Environment:
+- SECRET_KEY
+- DEBUG=False
+- ALLOWED_HOSTS=prework-quiz-api.onrender.com
+- DATABASE_URL (Render PostgreSQL internal URL)
+- AI_PROVIDER=groq
+- GROQ_API_KEY
+- CORS_ALLOWED_ORIGINS
 
-# 3. Add PostgreSQL plugin
-#    Go to Railway dashboard → New Service → Database → PostgreSQL
-#    Copy the DATABASE_URL from the PostgreSQL service
+### Build Command
+pip install -r requirements.txt && python manage.py collectstatic --noinput
 
-# 4. Set environment variables in Railway dashboard:
-SECRET_KEY=<your-secret-key>
-DEBUG=False
-ALLOWED_HOSTS=<your-railway-domain>.railway.app
-DATABASE_URL=<from-railway-postgres>
-AI_PROVIDER=gemini          # or openai / groq
-GEMINI_API_KEY=<your-key>
-CORS_ALLOWED_ORIGINS=https://your-frontend.com
+### Start Command
+gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --workers 2
 
-# 5. Deploy
-railway up
-
-# 6. Run migrations on Railway
-railway run python manage.py migrate
-
-# 7. Create superuser on Railway
-railway run python manage.py createsuperuser
-```
+### Post-deploy
+python manage.py migrate
+python manage.py createsuperuser
 
 ## Environment Variables Reference
 
