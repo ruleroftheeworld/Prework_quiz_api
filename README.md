@@ -136,7 +136,7 @@ quiz_project/
 
 👉 Full API documentation available here:
 
-📄 [View API Docs](docs/Api_documentation.md)
+📄 [View API Docs](/api-documentation.md)
 
 Includes:
 - 20+ endpoints
